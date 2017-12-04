@@ -1,0 +1,19 @@
+{
+  "name": "homework",
+  "version": "1.0.0",
+  "description": "my first vue project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpersie2008/homework.git"
+  },
+  "author": "Jerry.X.Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vpersie2008/homework/issues"
+  },
+  "homepage": "https://github.com/vpersie2008/homework#readme"
+}
