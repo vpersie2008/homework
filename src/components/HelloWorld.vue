@@ -6,15 +6,17 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
+  name: "HelloWorld",
+  data() {
     return {
-      msg: 'Hello world'
-    }
+      msg: "Hello world"
+    };
   }
-}
+};
 </script>
 
 <style scoped>
-
+.hello {
+  text-align: center;
+}
 </style>
