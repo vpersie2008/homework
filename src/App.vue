@@ -36,9 +36,6 @@
 <script>
 import { XHeader, Tabbar, TabbarItem, ViewBox } from "vux";
 
-import Home from "./components/pages/Home";
-import IndexHome from "./views/IndexHome";
-
 export default {
   name: "app",
   components: {
@@ -47,30 +44,30 @@ export default {
     Tabbar,
     TabbarItem
   },
-  computed:{
-    headerTitle (){
-      if(this.$route.path === '/'){
-          return '首页';
-        }
-        if(this.$route.path === '/login'){
-          return '登录';
-        }
-    },
-    headerLeftOptions(){
-      return {
-        showBack: this.$route.path !== '/'
+  computed: {
+    headerTitle() {
+      if (this.$route.path === "/") {
+        return "首页";
+      }
+      if (this.$route.path === "/login") {
+        return "登录";
       }
     },
-    headerRightOptions(){
+    headerLeftOptions() {
+      return {
+        showBack: this.$route.path !== "/"
+      };
+    },
+    headerRightOptions() {
       return {
         showMore: true
-      }
+      };
     }
   },
-  data(){
-    return{
-      headerTitle1:'我的账户'
-    }
+  data() {
+    return {
+      headerTitle1: "我的账户"
+    };
   },
   methods: {
     selectedHome() {
@@ -86,8 +83,7 @@ export default {
       });
     }
   },
-  created:()=>{
-  }
+  created: () => {}
 };
 </script>
 
