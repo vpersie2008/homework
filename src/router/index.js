@@ -5,6 +5,8 @@ import Login from '../views/account/login/Login'
 import Register from '../views/account/register/Register'
 import ProductList from '../views/home/productList/ProductList'
 
+
+
 Vue.use(Router)
 
 export default new Router({
