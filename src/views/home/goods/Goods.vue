@@ -1,15 +1,16 @@
 <template>
 
 <div>
-    
-    <tab :animate="false">
-        <tab-item active-class="active-6-2" selected>商品</tab-item>
-        <tab-item active-class="active-6-3">评论</tab-item>
+    <tab style="tabHeader">
+        <tab-item active-class="active-6-1">商品</tab-item>
+        <tab-item active-class="active-6-2" selected>评论</tab-item>
     </tab>
+
   <div class="good">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item, index) in goods" class="menu-item border-1px">
+        <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
+        :class="{'current':index === currentIndex}">
           <span class="text">
             <span v-show="item.type>0" class="icon"></span>{{item.name}}
           </span>
@@ -35,7 +36,6 @@
                   <span class="now">￥{{food.price}}</span><span class="old"
                         v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
-                
               </div>
             </li>
           </ul>
@@ -48,16 +48,15 @@
 </template>
 
 <script>
-
+import BScroll from 'better-scroll';
 import data from '../../../infrastructure/json/data.json';
-import { Tab, TabItem,Divider  } from 'vux'
+import { Tab, TabItem } from 'vux'
 
 export default{
     name:'goods',
     components:{
     Tab,
     TabItem,
-    Divider,
     },
     data(){
         return {
@@ -69,14 +68,72 @@ export default{
     },
     created(){
         this.goods = data.goods;
+        this.$nextTick(() => {
+        this._initScroll();
+        this._calculateHeight();
+      });
+
     },
     methods:{
-
+        _initScroll() {
+            this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+                click: true
+            });
+                this.foodScroll = new BScroll(this.$refs.foodWrapper, {
+                probeType: 3,
+                click: true
+            });
+                this.foodScroll.on('scroll', (pos) => {
+                this.scrolly = Math.abs(Math.round(pos.y));
+            });
+            },
+        _calculateHeight() {
+            let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+            let height = 0;
+            this.listHeight.push(height);
+            for (let i = 0; i < foodList.length; i++) {
+            let item = foodList[i];
+            height += item.clientHeight;
+            this.listHeight.push(height);
+            }
+        },
+        selectMenu(index, event) {
+            //debugger;
+            if (!event._constructed) {
+                // 去掉自带click事件的点击
+                return;
+            }
+                let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+                let el = foodList[index];
+                this.foodScroll.scrollToElement(el, 300);
+            },
+    },
+    computed:{
+        currentIndex() {
+                for (let i = 0; i < this.listHeight.length; i++) {
+                let height = this.listHeight[i];
+                let height2 = this.listHeight[i + 1];
+                if (!height2 || (this.scrolly >= height && this.scrolly < height2)) {
+                    return i;
+                }
+            }
+        return 0;
+      },
     }
 }
 </script>
 
 <style>
+
+.tabHeader{
+    position: relative;
+    z-index: 999;
+}
+
+li{
+    list-style: none;
+}
+
 .good {
     display: flex;
     width: 100%;
@@ -90,12 +147,39 @@ export default{
     background: #f3f5f7;   
 }
 
-.menu-item{
+.menu-wrapper .menu-item{
     display: table;
     width: 56px;
     height: 54px;
     line-height: 14px;
     padding: 0 12px;
+}
+
+.border-decoration-line{
+    position: relative;  
+}
+
+.border-decoration-line:after{
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid rgba(7, 17, 27, 0.1);
+    width: 100%;
+    content:'';
+}
+
+.current{
+    position: relative;
+    z-index: 10;
+    margin-top: -1px;
+    background: #fff;
+    font-weight: 700;
+    border: none;
+}
+
+.border-none:after{
+    display: none;
 }
 
 .icon{
@@ -107,12 +191,14 @@ export default{
     background-size: 12px 12px;
     background-repeat: no-repeat;
 }
-.text{
+
+.menu-item .text{
     display: table-cell;
     width: 56px;
     vertical-align: middle;
-    font-size: 12px;  
+    font-size: 12px;
 }
+
 
 .foods-wrapper{
     flex: 1;

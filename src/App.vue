@@ -1,5 +1,6 @@
 <template>
   <div id="app" style="height:100%;">
+    
       <view-box ref="viewBox" body-padding-top="1px" body-padding-bottom="55px">
         <x-header slot="header" class="x-header"
           :title="headerTitle"
@@ -15,6 +16,7 @@
         </x-header>
 
         <router-view></router-view>
+
         <tabbar class="tabbar" slot="bottom" style="position:fixed">
           <tabbar-item @on-item-click="selectedHome">
             <img slot="icon" src="./assets/icon/home_on.png">
@@ -34,7 +36,7 @@
 </template>
 
 <script>
-import { XHeader, Tabbar, TabbarItem, ViewBox } from "vux";
+import { XHeader, Tabbar, TabbarItem,Tab, TabItem, ViewBox } from "vux";
 
 export default {
   name: "app",
@@ -42,7 +44,9 @@ export default {
     XHeader,
     ViewBox,
     Tabbar,
-    TabbarItem
+    TabbarItem,
+    Tab,
+    TabItem
   },
   computed: {
     headerTitle() {

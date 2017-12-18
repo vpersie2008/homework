@@ -52,7 +52,7 @@ export default {
       }
 
       this.buttonTitle = ` ${--second} 秒后重发`;
-      
+
       let interval = setInterval(() => {
         this.buttonTitle = ` ${--second} 秒后重发`;
         if (second === 0) {
