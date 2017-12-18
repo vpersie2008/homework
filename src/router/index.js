@@ -4,7 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '../views/account/login/Login'
 import Register from '../views/account/register/Register'
 import ProductList from '../views/home/productList/ProductList'
-
+import Goods from '../views/home/goods/Goods'
 
 
 Vue.use(Router)
@@ -22,9 +22,14 @@ export default new Router({
       component: Login
     }, 
     {
-      path: '/',
+      path: '/productList',
       name: 'ProductList',
       component: ProductList
+    },
+    {
+      path: '/',
+      name: 'goods',
+      component: Goods
     }
   ],
   mode: 'history'

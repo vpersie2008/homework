@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="height:100%;">
-      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px">
+      <view-box ref="viewBox" body-padding-top="1px" body-padding-bottom="55px">
         <x-header slot="header" class="x-header"
           :title="headerTitle"
           :left-options="headerLeftOptions"
