@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { XHeader, Tabbar, TabbarItem, ViewBox } from "vux";
+import { XHeader, Tabbar, TabbarItem,Tab, TabItem, ViewBox } from "vux";
 
 export default {
   name: "app",
@@ -42,7 +42,9 @@ export default {
     XHeader,
     ViewBox,
     Tabbar,
-    TabbarItem
+    TabbarItem,
+    Tab,
+    TabItem
   },
   computed: {
     headerTitle() {

@@ -1,15 +1,12 @@
 <template>
 
 <div>
-    
-    <tab :animate="false">
-        <tab-item active-class="active-6-2" selected>商品</tab-item>
-        <tab-item active-class="active-6-3">评论</tab-item>
-    </tab>
+
   <div class="good">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item, index) in goods" class="menu-item border-1px">
+        <li v-for="(item, index) in goods" class="menu-item border-1px"  @click="selectMenu(index, $event)" 
+        :class="{'current':index === currentIndex}">
           <span class="text">
             <span v-show="item.type>0" class="icon"></span>{{item.name}}
           </span>
@@ -48,7 +45,7 @@
 </template>
 
 <script>
-
+import BScroll from 'better-scroll';
 import data from '../../../infrastructure/json/data.json';
 import { Tab, TabItem,Divider  } from 'vux'
 
@@ -69,9 +66,57 @@ export default{
     },
     created(){
         this.goods = data.goods;
+        this.$nextTick(() => {
+        this._initScroll();
+        this._calculateHeight();
+      });
+
     },
     methods:{
-
+        _initScroll() {
+            this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+                click: true
+            });
+                this.foodScroll = new BScroll(this.$refs.foodWrapper, {
+                probeType: 3,
+                click: true
+            });
+                this.foodScroll.on('scroll', (pos) => {
+                this.scrolly = Math.abs(Math.round(pos.y));
+            });
+            },
+        _calculateHeight() {
+            let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+            let height = 0;
+            this.listHeight.push(height);
+            for (let i = 0; i < foodList.length; i++) {
+            let item = foodList[i];
+            height += item.clientHeight;
+            this.listHeight.push(height);
+            }
+        },
+        selectMenu(index, event) {
+            //debugger;
+            if (!event._constructed) {
+                // 去掉自带click事件的点击
+                return;
+            }
+                let foodList = this.$refs.foodWrapper.getElementsByClassName('food-list-hook');
+                let el = foodList[index];
+                this.foodScroll.scrollToElement(el, 300);
+            },
+    },
+    computed:{
+        currentIndex() {
+                for (let i = 0; i < this.listHeight.length; i++) {
+                let height = this.listHeight[i];
+                let height2 = this.listHeight[i + 1];
+                if (!height2 || (this.scrolly >= height && this.scrolly < height2)) {
+                    return i;
+                }
+            }
+        return 0;
+      },
     }
 }
 </script>
@@ -81,7 +126,7 @@ export default{
     display: flex;
     width: 100%;
     position: absolute;
-    top: 120px;
+    top: 50px;
     bottom: 46px;
 }
 .menu-wrapper{
@@ -96,6 +141,14 @@ export default{
     height: 54px;
     line-height: 14px;
     padding: 0 12px;
+}
+
+.current{
+    position: relative;
+    z-index: 10;
+    margin-top: -1px;
+    background: #fff;
+    font-weight: 700;
 }
 
 .icon{
