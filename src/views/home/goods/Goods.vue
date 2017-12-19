@@ -10,7 +10,7 @@
   <div class="good">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item, index) in goods" class="menu-item border-1px"  @click="selectMenu(index, $event)" 
+        <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
         :class="{'current':index === currentIndex}">
           <span class="text">
             <span v-show="item.type>0" class="icon"></span>{{item.name}}
