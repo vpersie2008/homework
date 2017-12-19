@@ -1,6 +1,7 @@
 <template>
 
 <div>
+
     <tab style="tabHeader">
         <tab-item active-class="active-6-1">商品</tab-item>
         <tab-item active-class="active-6-2" selected>评论</tab-item>
@@ -9,7 +10,7 @@
   <div class="good">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
+        <li v-for="(item, index) in goods" class="menu-item border-1px"  @click="selectMenu(index, $event)" 
         :class="{'current':index === currentIndex}">
           <span class="text">
             <span v-show="item.type>0" class="icon"></span>{{item.name}}
@@ -155,6 +156,7 @@ li{
     padding: 0 12px;
 }
 
+
 .border-decoration-line{
     position: relative;  
 }
@@ -168,7 +170,6 @@ li{
     width: 100%;
     content:'';
 }
-
 .current{
     position: relative;
     z-index: 10;
