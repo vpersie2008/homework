@@ -2,48 +2,68 @@
 
 <div>
 
-    <tab style="tabHeader">
-        <tab-item active-class="active-6-1">商品</tab-item>
-        <tab-item active-class="active-6-2" selected>评论</tab-item>
+    <tab class="tabBarTop">
+        <tab-item active-class="active-6-1" selected>商品</tab-item>
+        <tab-item active-class="active-6-2">评论</tab-item>
     </tab>
 
-  <div class="good">
-    <div class="menu-wrapper" ref="menuWrapper">
-      <ul>
-        <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
-        :class="{'current':index === currentIndex}">
-          <span class="text">
-            <span v-show="item.type>0" class="icon"></span>{{item.name}}
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="foods-wrapper" ref="foodWrapper">
-      <ul>
-        <li v-for="item in goods" class="food-list food-list-hook">
-          <h1 class="title">{{item.name}}</h1>
-          <ul>
-            <li v-for="food in item.foods" class="food-item">
-              <div class="icon">
-                <img :src="food.icon" alt="" width="57">
-              </div>
-              <div class="content">
-                <h2 class="name">{{food.name}}</h2>
-                <p class="desc">{{food.description}}</p>
-                <div class="extra">
-                  <span class="count">月售{{food.sellCount}}</span><span class="count">好评{{food.rating}}</span>
-                </div>
-                <div class="price">
-                  <span class="now">￥{{food.price}}</span><span class="old"
-                        v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-                </div>
-              </div>
+    <div class="good">
+        <div class="menu-wrapper" ref="menuWrapper">
+            <ul>
+            <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
+            :class="{'current':index === currentIndex}">
+                <span class="text">
+                <span v-show="item.type>0" class="icon"></span>{{item.name}}
+                </span>
             </li>
-          </ul>
-        </li>
-      </ul>
+            </ul>
+        </div>
+        <div class="foods-wrapper" ref="foodWrapper">
+            <ul>
+            <li v-for="item in goods" class="food-list food-list-hook">
+                <h1 class="title">{{item.name}}</h1>
+                <ul>
+                <li v-for="food in item.foods" class="food-item">
+                    <div class="icon">
+                    <img :src="food.icon" alt="" width="57">
+                    </div>
+                    <div class="content">
+                    <h2 class="name">{{food.name}}</h2>
+                    <p class="desc">{{food.description}}</p>
+                    <div class="extra">
+                        <span class="count">月售{{food.sellCount}}</span><span class="count">好评{{food.rating}}</span>
+                    </div>
+
+                    <div class="price">
+                        <span class="now">￥{{food.price}}</span>
+                        <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                        <div class="icon">
+                            <x-icon type="ios-plus" class="icon-green" @click="showShoppingCart"></x-icon>        
+                        </div>
+                    </div>   
+                    </div>
+                </li>
+                </ul>
+            </li>
+            </ul>
+        </div>
     </div>
-  </div>
+
+    <div v-transfer-dom>
+      <popup v-model="show7" height="270px" is-transparent>
+        <div style="width: 95%;background-color:#fff;height:250px;margin:0 auto;border-radius:5px;padding-top:10px;">
+         <group>
+          <cell title="Product" value="Donate"></cell>
+          <cell title="Total" value="$10.24"></cell>
+         </group>
+         <div style="padding:20px 15px;">
+          <x-button type="primary">Pay</x-button>
+          <x-button @click.native="show7 = false">Cancel</x-button>
+         </div>
+        </div>
+      </popup>
+    </div>
+
 
 </div>
 </template>
@@ -51,20 +71,24 @@
 <script>
 import BScroll from 'better-scroll';
 import data from '../../../infrastructure/json/data.json';
-import { Tab, TabItem } from 'vux'
+import { Tab,TabItem,Popup,Group,Cell,XButton,TransferDom} from 'vux'
 
 export default{
     name:'goods',
+    directives: {
+    TransferDom
+    },
     components:{
     Tab,
-    TabItem,
+    TabItem,Popup,Group,Cell,XButton
     },
     data(){
         return {
         goods: [],
         listHeight: [],
         scrolly: 0,
-        selectedFood: {}
+        selectedFood: {},
+        show7:false
       };
     },
     created(){
@@ -108,6 +132,9 @@ export default{
                 let el = foodList[index];
                 this.foodScroll.scrollToElement(el, 300);
             },
+        showShoppingCart(){
+            this.show7 = true;
+        }
     },
     computed:{
         currentIndex() {
@@ -126,9 +153,13 @@ export default{
 
 <style>
 
-.tabHeader{
-    position: relative;
-    z-index: 999;
+.tabBarTop {
+  width: 100%;
+  position: relative;
+  left: 0;
+  top: -1;
+  z-index: 100;
+  border: none;
 }
 
 li{
@@ -139,7 +170,7 @@ li{
     display: flex;
     width: 100%;
     position: absolute;
-    top: 120px;
+    top: 100px;
     bottom: 46px;
 }
 .menu-wrapper{
@@ -267,6 +298,11 @@ li{
     font-size: 10px;
     color: rgb(147, 153, 159);
     text-decoration: line-through;
+}
+
+.foods-wrapper .food-list .food-item .content .icon{
+    position: absolute;
+    right: 10%;
 }
 
 </style>
