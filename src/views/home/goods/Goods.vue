@@ -2,48 +2,55 @@
 
 <div>
 
-    <tab style="tabHeader">
-        <tab-item active-class="active-6-1">商品</tab-item>
-        <tab-item active-class="active-6-2" selected>评论</tab-item>
+    <tab class="tabBarTop">
+        <tab-item active-class="active-6-1" selected>商品</tab-item>
+        <tab-item active-class="active-6-2">评论</tab-item>
     </tab>
 
-  <div class="good">
-    <div class="menu-wrapper" ref="menuWrapper">
-      <ul>
-        <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
-        :class="{'current':index === currentIndex}">
-          <span class="text">
-            <span v-show="item.type>0" class="icon"></span>{{item.name}}
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="foods-wrapper" ref="foodWrapper">
-      <ul>
-        <li v-for="item in goods" class="food-list food-list-hook">
-          <h1 class="title">{{item.name}}</h1>
-          <ul>
-            <li v-for="food in item.foods" class="food-item">
-              <div class="icon">
-                <img :src="food.icon" alt="" width="57">
-              </div>
-              <div class="content">
-                <h2 class="name">{{food.name}}</h2>
-                <p class="desc">{{food.description}}</p>
-                <div class="extra">
-                  <span class="count">月售{{food.sellCount}}</span><span class="count">好评{{food.rating}}</span>
-                </div>
-                <div class="price">
-                  <span class="now">￥{{food.price}}</span><span class="old"
-                        v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-                </div>
-              </div>
+    <div class="good">
+        <div class="menu-wrapper" ref="menuWrapper">
+            <ul>
+            <li v-for="(item, index) in goods" class="menu-item border-decoration-line"  @click="selectMenu(index, $event)" 
+            :class="{'current':index === currentIndex}">
+                <span class="text">
+                <span v-show="item.type>0" class="icon"></span>{{item.name}}
+                </span>
             </li>
-          </ul>
-        </li>
-      </ul>
+            </ul>
+        </div>
+        <div class="foods-wrapper" ref="foodWrapper">
+            <ul>
+            <li v-for="item in goods" class="food-list food-list-hook">
+                <h1 class="title">{{item.name}}</h1>
+                <ul>
+                <li v-for="food in item.foods" class="food-item">
+                    <div class="icon">
+                    <img :src="food.icon" alt="" width="57">
+                    </div>
+                    <div class="content">
+                    <h2 class="name">{{food.name}}</h2>
+                    <p class="desc">{{food.description}}</p>
+                    <div class="extra">
+                        <span class="count">月售{{food.sellCount}}</span><span class="count">好评{{food.rating}}</span>
+                    </div>
+
+                    <div class="price">
+                        <span class="now">￥{{food.price}}</span>
+                        <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                        <div class="icon">
+                            <x-icon type="ios-plus" class="icon-green" @click="showShoppingCart"></x-icon>        
+                        </div>
+                    </div>   
+                    </div>
+                </li>
+                </ul>
+            </li>
+            </ul>
+        </div>
     </div>
-  </div>
+
+
+        <shopping-cart ref="shoppingCart"></shopping-cart>
 
 </div>
 </template>
@@ -51,20 +58,29 @@
 <script>
 import BScroll from 'better-scroll';
 import data from '../../../infrastructure/json/data.json';
-import { Tab, TabItem } from 'vux'
+import ShoppingCart from '../shoppingCart/ShoppingCart'
+import { Tab,TabItem,Popup,Group,Cell,XButton,TransferDom} from 'vux'
 
 export default{
     name:'goods',
+    directives: {
+        TransferDom
+    },
     components:{
-    Tab,
-    TabItem,
+        Tab,
+        TabItem,
+        Popup,
+        Group,
+        Cell,
+        XButton,
+        ShoppingCart
     },
     data(){
         return {
         goods: [],
         listHeight: [],
         scrolly: 0,
-        selectedFood: {}
+        selectedFood: {},
       };
     },
     created(){
@@ -108,6 +124,9 @@ export default{
                 let el = foodList[index];
                 this.foodScroll.scrollToElement(el, 300);
             },
+        showShoppingCart(){
+            this.$refs.shoppingCart.showShoppingCart()
+        }
     },
     computed:{
         currentIndex() {
@@ -119,16 +138,20 @@ export default{
                 }
             }
         return 0;
-      },
+      }
     }
 }
 </script>
 
 <style>
 
-.tabHeader{
-    position: relative;
-    z-index: 999;
+.tabBarTop {
+  width: 100%;
+  position: relative;
+  left: 0;
+  top: -1;
+  z-index: 100;
+  border: none;
 }
 
 li{
@@ -139,7 +162,7 @@ li{
     display: flex;
     width: 100%;
     position: absolute;
-    top: 120px;
+    top: 100px;
     bottom: 46px;
 }
 .menu-wrapper{
@@ -267,6 +290,11 @@ li{
     font-size: 10px;
     color: rgb(147, 153, 159);
     text-decoration: line-through;
+}
+
+.foods-wrapper .food-list .food-item .content .icon{
+    position: absolute;
+    right: 10%;
 }
 
 </style>

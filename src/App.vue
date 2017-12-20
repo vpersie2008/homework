@@ -1,7 +1,6 @@
 <template>
   <div id="app" style="height:100%;">
-    
-      <view-box ref="viewBox" body-padding-top="1px" body-padding-bottom="55px">
+      <view-box ref="viewBox" body-padding-bottom="55px">
         <x-header slot="header" class="x-header"
           :title="headerTitle"
           :left-options="headerLeftOptions"
@@ -111,6 +110,7 @@ body {
   left: 0;
   top: 0;
   z-index: 100;
+  border-bottom: none;
 }
 .x-header.x-home-header {
   fill: #fff;
