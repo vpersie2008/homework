@@ -49,7 +49,6 @@
         </div>
     </div>
 
-
         <shopping-cart ref="shoppingCart"></shopping-cart>
 
 </div>
@@ -74,6 +73,7 @@ export default{
         Cell,
         XButton,
         ShoppingCart
+
     },
     data(){
         return {
