@@ -16,7 +16,7 @@
 
         <router-view></router-view>
 
-        <tabbar class="tabbar" slot="bottom" style="position:fixed">
+        <!-- <tabbar class="tabbar" slot="bottom" style="position:fixed">
           <tabbar-item @on-item-click="selectedHome">
             <img slot="icon" src="./assets/icon/home_on.png">
             <span slot="label">首页</span>
@@ -29,7 +29,7 @@
             <img slot="icon" src="./assets/icon/me_off.png">
             <span slot="label">我的</span>
           </tabbar-item>
-        </tabbar>
+        </tabbar> -->
       </view-box>
   </div>
 </template>

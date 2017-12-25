@@ -49,8 +49,10 @@
         </div>
     </div>
 
-        <shopping-cart ref="shoppingCart"></shopping-cart>
-
+    <shopping-cart ref="shoppingCart"></shopping-cart>
+    
+    <shopping-cart-tab></shopping-cart-tab>
+    
 </div>
 </template>
 
@@ -58,6 +60,7 @@
 import BScroll from 'better-scroll';
 import data from '../../../infrastructure/json/data.json';
 import ShoppingCart from '../shoppingCart/ShoppingCart'
+import ShoppingCartTab from '../shoppingCart/ShoppingCartTab'
 import { Tab,TabItem,Popup,Group,Cell,XButton,TransferDom} from 'vux'
 
 export default{
@@ -72,7 +75,8 @@ export default{
         Group,
         Cell,
         XButton,
-        ShoppingCart
+        ShoppingCart,
+        ShoppingCartTab
 
     },
     data(){

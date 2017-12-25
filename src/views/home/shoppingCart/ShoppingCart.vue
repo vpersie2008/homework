@@ -9,19 +9,24 @@
                         right-text="清空"
                         title=""
                         :show-bottom-border="false"
-                        @on-click-left="false"
-                        @on-click-right="false">
+                        @on-click-right="clearShoppingCart">
                     </popup-header>
 
-                    <div v-for="i in 8">
-                        <cell title="测试商品" >
-                            <div class="cells"> 
-                                <span class="cell-price-symbol">¥</span>
-                                <span class="cell-price">118</span>
-                                <inline-x-number width="50px" button-style="round" :min="0"></inline-x-number>
+                    <scroller lock-x height="200px" @on-scroll="onScroll" ref="scrollerEvent">
+                        <div class="scroll-content">
+                            <div v-for="i in 10">
+                                <cell title="测试商品">
+                                    <div class="cells"> 
+                                        <span>{{i}}</span>
+                                        <span class="cell-price-symbol">¥</span>
+                                        <span class="cell-price">118</span>
+                                        <inline-x-number width="50px" button-style="round" :min="0"></inline-x-number>
+                                    </div>
+                                </cell>
                             </div>
-                        </cell>
-                    </div>
+                        </div>
+                    </scroller>
+
                 </group>
                 
                 <div>
@@ -53,7 +58,8 @@ import {
   InlineXNumber,
   PopupHeader,
   Badge,
-  Divider
+  Divider,
+  Scroller
 } from "vux";
 export default {
   name: "goods",
@@ -69,21 +75,39 @@ export default {
     InlineXNumber,
     PopupHeader,
     Badge,
-    Divider
+    Divider,
+    Scroller
   },
   created() {},
   data() {
-    return { isShowModal: false };
+    return { 
+            scrollTop: 0,
+            isShowModal: false 
+        };
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.$refs.scrollerEvent.reset({top: 0})
+    })
   },
   methods: {
     showShoppingCart() {
       this.isShowModal = true;
-    }
+      this.$refs.scrollerEvent.reset({top: 0})
+    },
+    clearShoppingCart(){
+        this.isShowModal = false;
+        console.log('clear shopping cart.')
+        return;
+    },
+    onScroll (pos) {
+      this.scrollTop = pos.top;
+      console.log(this.scrollTop);
+    },
   }
 };
 </script>
 <style>
-
 .popup-title {
   height: 270px;
   margin-bottom: 10px;
@@ -103,10 +127,10 @@ export default {
   text-align: center;
 }
 
-.cell-price-symbol{
-    color: #f60;
-    padding-right: 1px;
-    font-weight: 300;
+.cell-price-symbol {
+  color: #f60;
+  padding-right: 1px;
+  font-weight: 300;
 }
 
 .cell-price {
@@ -117,37 +141,36 @@ export default {
   font-weight: 700;
 }
 
-.cell-sumprice{
-    display: flex;
-    text-align: center;
+.cell-sumprice {
+  display: flex;
+  text-align: center;
 }
 
-.cell-summary-price-title{
-    color: #fff;
-    font-size: 1.2rem;
+.cell-summary-price-title {
+  color: #fff;
+  font-size: 1.2rem;
 }
 
-.cell-summary-price{
-    color: #fff;
-    padding-left: 10px;
-    font-size: 1.5rem;
-    font-weight: 500;
+.cell-summary-price {
+  color: #fff;
+  padding-left: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
-.cell-line-through-price{
-    text-decoration: line-through;
-    padding-left: 10px;
-    font-weight: 400;
-    font-style: italic;
-    color: rgb(230, 223, 223);
+.cell-line-through-price {
+  text-decoration: line-through;
+  padding-left: 10px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgb(230, 223, 223);
 }
 
-.cell-footer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0 5px 0;
-    background-color: rgba(61,61,63,.9);
+.cell-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0 5px 0;
+  background-color: rgba(61, 61, 63, 0.9);
 }
-
 </style>
