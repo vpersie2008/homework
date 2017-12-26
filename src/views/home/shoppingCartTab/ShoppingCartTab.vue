@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import ShoppingCart from './ShoppingCart'
+import ShoppingCart from '../shoppingCart/ShoppingCart'
 
 export default {
   name: "ShoppingCartTab",
@@ -48,7 +48,7 @@ export default {
     position: fixed;
     left: 0px;
     bottom: 0px;
-    z-index: 50;
+    z-index: 100;
     width: 100%;
     height: 48px;
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="shoppingCart">
       <div v-transfer-dom>
-        <popup v-model="isShowModal" >
-            <div class="">
+        <popup v-model="isShowModal" class="popup-content">
+            <div >
                 <group>
                     <popup-header style="background-color:#eceff1"
                         left-text="已选商品"
@@ -113,14 +113,9 @@ export default {
   margin-bottom: 10px;
 }
 
-.popup-content {
-  width: 95%;
-  background-color: #fff;
-
-  margin: 0 auto;
-  border-radius: 5px;
-  padding-top: 1px;
-}
+/* .popup-content {
+  margin-bottom: 80px;
+} */
 
 .cells {
   display: flex;

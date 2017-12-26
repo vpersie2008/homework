@@ -60,7 +60,7 @@
 import BScroll from 'better-scroll';
 import data from '../../../infrastructure/json/data.json';
 import ShoppingCart from '../shoppingCart/ShoppingCart'
-import ShoppingCartTab from '../shoppingCart/ShoppingCartTab'
+import ShoppingCartTab from '../shoppingCartTab/ShoppingCartTab'
 import { Tab,TabItem,Popup,Group,Cell,XButton,TransferDom} from 'vux'
 
 export default{
