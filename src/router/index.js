@@ -5,7 +5,7 @@ import Login from '../views/account/login/Login'
 import Register from '../views/account/register/Register'
 import ProductList from '../views/home/productList/ProductList'
 import Goods from '../views/home/goods/Goods'
-
+import CheckOut from '../views/home/payment/CheckOut'
 
 Vue.use(Router)
 
@@ -30,6 +30,10 @@ export default new Router({
       path: '/',
       name: 'goods',
       component: Goods
+    },{
+      path: '/checkout',
+      name: 'CheckOut',
+      component: CheckOut
     }
   ],
   mode: 'history'
